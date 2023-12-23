@@ -7,6 +7,7 @@
 - [🚀 Project Commands](#-project-commands)
   - [🖥️ Launch Website](#-launch-website)
   - [🐛 Run Linter](#-run-linter)
+  - [👓 Check Accessibility](#-check-accessibility)
 
 ## 📖 Project
 
@@ -26,6 +27,7 @@ Here is the stack used in the project :
   - [Vite](https://vitejs.dev/guide/)
 - Miscellaneous
   - [ESLint](https://eslint.org/)
+  - [Pa11y](https://pa11y.org/)
 
 [🔼 Back to the Table of Contents](#table-of-contents)
 
@@ -39,7 +41,7 @@ To start the website, do the following :
 2. Place yourself in the project folder
 3. Use either `npm run dev`, `npm run preview` or `npm run build` to see Fisheye website
 
-🎉 Vite will open the project in a browser tab !
+**_🎉 Vite will open the project in a browser tab !_**
 
 [🔼 Back to the Table of Contents](#table-of-contents)
 
@@ -51,6 +53,14 @@ To run ESLint, follow the steps :
 2. Place yourself in the project with `cd ./oc-p6-fisheye`
 3. Run `npm run eslint` command
 
-🎉 ESLint will **check `.js, .css & .html` files** but ignores `node_modules/` !
+**_🎉 ESLint will check `.js, .css & .html` files but ignores `node_modules/` !_**
+
+[🔼 Back to the Table of Contents](#table-of-contents)
+
+### 👓 Check Accessibility
+
+To check the accessibility of the project, run the following command `npm run pa11y [paste the URL to check]`.
+
+**_🎉 Congrats ! You checked the website accessibility !_**
 
 [🔼 Back to the Table of Contents](#table-of-contents)
