@@ -7,10 +7,12 @@ function photographerTemplate(data) {
     // Photographer Card
     const article = document.createElement("article");
     article.setAttribute("aria-label", name);
+    article.setAttribute("tabindex", 0);
 
     // Photo
     const img = document.createElement("img");
     img.setAttribute("src", picture);
+    img.setAttribute("alt", "");
 
     // Name
     const h2 = document.createElement("h2");
