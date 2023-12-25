@@ -1,11 +1,11 @@
-.photographer_section {
+.photographer-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 70px;
   margin-top: 100px;
 }
 
-.photographer_section article {
+.photographer-list article {
   justify-self: center;
   display: flex;
   flex-direction: column;
@@ -15,31 +15,33 @@
   margin-bottom: 83px;
 }
 
-.photographer_section article h2 {
+.photographer-list article h2 {
   color: #d3573c;
   font-size: 36px;
 
   margin: 20px 0 0 0;
 }
 
-.photographer_section article img {
+.photographer-list article img {
   height: 200px;
   width: 200px;
+
+  object-fit: cover;
 
   border-radius: 50%;
 }
 
-.photographer_section article p {
+.photographer-list article p {
   margin: 3px;
 }
 
-.photographer_section article .location {
+.photographer-list article .location {
   font-size: 13px;
   font-weight: bold;
   color: #901c1c;
 }
 
-.photographer_section article .price {
+.photographer-list article .price {
   font-size: 9px;
   color: #757575;
 }
