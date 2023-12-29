@@ -1,12 +1,6 @@
 // Imports
 import photographerTemplate from "../templates/photographers";
-
-async function getPhotographers() {
-  const res = await fetch("../../data/photographers.json");
-  const data = await res.json();
-
-  return data;
-}
+import { getPhotographers } from "../utils/fetchData";
 
 async function displayData(photographers) {
   const photographersSection = document.querySelector(".photographer-list");
