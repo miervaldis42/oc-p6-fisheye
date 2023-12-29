@@ -1,24 +1,126 @@
-#contact_modal {
-  display: none;
-}
-
 .photograph-header {
-  background-color: #fafafa;
   height: 300px;
-  margin: 0 100px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 70px;
+
+  justify-items: center;
+  align-items: center;
+
+  background-color: #fafafa;
+
+  padding: 50px;
 }
 
-.contact_button {
+.photograph-header .photograph-name {
+  font-size: 64px;
+  color: #d3573c;
+
+  margin: 0 0 24px 0;
+}
+
+.photograph-header .location {
+  font-size: 24px;
+  color: #901c1c;
+}
+
+.photograph-header .tagline {
+  font-size: 18px;
+}
+
+.photograph-header .picture {
+  height: 200px;
+  width: 200px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+}
+
+.button {
+  cursor: pointer;
+
   font-size: 20px;
   font-weight: bold;
   color: white;
-  padding: 11px;
-  width: 170px;
-  height: 70px;
-  border: none;
+
   background-color: #901c1c;
   border-radius: 5px;
-  cursor: pointer;
+  border: none;
+
+  padding: 12px;
+  margin-left: 25px;
+}
+
+.contact-button {
+  width: 170px;
+  height: 70px;
+}
+
+.portfolio-section {
+  margin: 9px 0;
+}
+
+.portfolio-section .filterLabel {
+  font-weight: bold;
+}
+
+.portfolio {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.portfolio article .work {
+  height: 300px;
+  width: 350px;
+
+  object-fit: cover;
+
+  border-radius: 5px;
+}
+
+.portfolio .work-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.portfolio .like-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+}
+
+.heart {
+  height: 18px;
+  width: 18px;
+
+  margin-left: 4px;
+}
+
+.insert {
+  position: fixed;
+  bottom: 0;
+  right: 36px;
+
+  width: min-content;
+
+  display: flex;
+  justify-content: space-between;
+
+  font-weight: bolder;
+  border-radius: 5px;
+
+  padding: 21px 31px 16px 31px;
+}
+
+.insert p:first-child {
+  display: flex;
+
+  margin-right: 72px;
 }
 
 .modal {
@@ -46,6 +148,10 @@
   font-size: 64px;
   font-weight: normal;
   text-align: center;
+}
+
+#contact_modal {
+  display: none;
 }
 
 form {
