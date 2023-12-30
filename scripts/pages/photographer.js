@@ -11,6 +11,11 @@ async function displayData(data) {
   const photographerHeader =
     photographerPageUIBuilder.photographerHeaderTemplate();
   main.appendChild(photographerHeader);
+
+  // Portfolio
+  const photographerPortfolio =
+    photographerPageUIBuilder.photographerPortfolioTemplate();
+  main.appendChild(photographerPortfolio);
 }
 
 async function init() {
