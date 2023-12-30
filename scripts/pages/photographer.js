@@ -16,6 +16,12 @@ async function displayData(data) {
   const photographerPortfolio =
     photographerPageUIBuilder.photographerPortfolioTemplate();
   main.appendChild(photographerPortfolio);
+
+  // Insert
+  const body = document.querySelector("body");
+  const photographerInsert =
+    photographerPageUIBuilder.photographerPriceAndTotalLikesTemplate();
+  body.appendChild(photographerInsert);
 }
 
 async function init() {

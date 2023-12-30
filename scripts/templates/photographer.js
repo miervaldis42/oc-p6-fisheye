@@ -1,6 +1,6 @@
 function photographerPageTemplate(data) {
   const { photographer, media } = data;
-  const { name, portrait, city, country, tagline } = photographer;
+  const { name, portrait, city, country, tagline, price } = photographer;
 
   // Header
   function photographerHeaderTemplate() {
@@ -150,10 +150,38 @@ function photographerPageTemplate(data) {
     return portfolioSection;
   }
 
+  // Insert
+  function photographerPriceAndTotalLikesTemplate() {
+    const insert = document.createElement("div");
+    insert.className = "insert secondary-background";
+
+    // Likes
+    const totalLikes = media.reduce((sum, item) => sum + item.likes, 0);
+    const portfolioTotalLikes = document.createElement("p");
+    portfolioTotalLikes.textContent = totalLikes;
+
+    const heart = document.createElement("img");
+    heart.setAttribute("src", "assets/icons/heart.svg");
+    heart.alt = "Likes";
+    heart.className = "heart";
+
+    portfolioTotalLikes.appendChild(heart);
+    insert.appendChild(portfolioTotalLikes);
+
+    // Price
+    const priceText = document.createElement("p");
+    priceText.textContent = `${price}€/jour`;
+
+    insert.appendChild(priceText);
+
+    return insert;
+  }
+
   return {
     data,
     photographerHeaderTemplate,
     photographerPortfolioTemplate,
+    photographerPriceAndTotalLikesTemplate,
   };
 }
 
