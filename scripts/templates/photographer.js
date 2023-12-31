@@ -1,6 +1,7 @@
 function photographerPageTemplate(data) {
   const { photographer, media } = data;
   const { name, portrait, city, country, tagline, price } = photographer;
+  let initialTotalLikes = media.reduce((sum, item) => sum + item.likes, 0);
 
   // Header
   function photographerHeaderTemplate() {
@@ -120,7 +121,7 @@ function photographerPageTemplate(data) {
       photographerWorkTitle.textContent = m.title;
       photographerWorkTitle.className = "work-caption primary-font";
 
-      // Likes
+      // 'Like' Button
       const likesButton = document.createElement("button");
       likesButton.ariaLabel = "Nombres de likes";
       likesButton.className = "like-button primary-font";
@@ -135,6 +136,17 @@ function photographerPageTemplate(data) {
 
       likesButton.appendChild(span);
       likesButton.appendChild(icon);
+
+      likesButton.addEventListener("click", () => {
+        // Toggle the like state (increment or decrease)
+        if (Number(span.textContent) === m.likes) {
+          span.textContent = m.likes + 1;
+          updateTotalLikes(true);
+        } else {
+          span.textContent = m.likes;
+          updateTotalLikes(false);
+        }
+      });
 
       article.appendChild(figure);
       figure.appendChild(photographerWorkTitle);
@@ -156,13 +168,13 @@ function photographerPageTemplate(data) {
     insert.className = "insert secondary-background";
 
     // Likes
-    const totalLikes = media.reduce((sum, item) => sum + item.likes, 0);
     const portfolioTotalLikes = document.createElement("p");
-    portfolioTotalLikes.textContent = totalLikes;
+    portfolioTotalLikes.id = "portfolioTotalLikes";
+    portfolioTotalLikes.innerHTML = initialTotalLikes;
 
     const heart = document.createElement("img");
     heart.setAttribute("src", "assets/icons/heart.svg");
-    heart.alt = "Likes";
+    heart.alt = "Icône de likes";
     heart.className = "heart";
 
     portfolioTotalLikes.appendChild(heart);
@@ -175,6 +187,24 @@ function photographerPageTemplate(data) {
     insert.appendChild(priceText);
 
     return insert;
+  }
+
+  // Modify the portfolio's total likes in the Insert
+  function updateTotalLikes(likeIsIncreasing) {
+    const portfolioTotalLikesElement = document.getElementById(
+      "portfolioTotalLikes"
+    );
+
+    // Increase or Decrease the count
+    initialTotalLikes += likeIsIncreasing ? 1 : -1;
+    portfolioTotalLikesElement.innerHTML = initialTotalLikes;
+
+    // Heart Icon
+    const icon = document.createElement("img");
+    icon.setAttribute("src", "assets/icons/heart.svg");
+    icon.alt = "Likes";
+    icon.className = "heart";
+    portfolioTotalLikesElement.appendChild(icon);
   }
 
   return {
