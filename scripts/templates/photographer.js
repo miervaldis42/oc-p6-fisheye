@@ -1,4 +1,5 @@
 function photographerPageTemplate(data) {
+  // Data
   const { photographer, media } = data;
   const { name, portrait, city, country, tagline, price } = photographer;
   let initialTotalLikes = media.reduce((sum, item) => sum + item.likes, 0);
@@ -57,18 +58,18 @@ function photographerPageTemplate(data) {
     const portfolioSection = document.createElement("section");
 
     // Filter
-    const div = document.createElement("div");
-    div.className = "portfolio-section";
-    div.ariaLabel = "Filtrer par";
+    const sortArea = document.createElement("sortArea");
+    sortArea.className = "portfolio-section";
+    sortArea.ariaLabel = "Filtrer par";
 
-    const filter = document.createElement("label");
-    filter.textContent = "Trier par";
-    filter.htmlFor = "dropdown";
-    filter.className = "filterLabel";
+    const sort = document.createElement("label");
+    sort.textContent = "Trier par";
+    sort.htmlFor = "dropdown";
+    sort.className = "sortLabel";
 
     const dropdown = document.createElement("select");
     dropdown.setAttribute("id", "dropdown");
-    dropdown.setAttribute("name", "filters");
+    dropdown.setAttribute("name", "sort");
     dropdown.className = "button";
 
     const options = ["Popularité", "Date", "Titre"];
@@ -80,84 +81,112 @@ function photographerPageTemplate(data) {
       dropdown.appendChild(option);
     });
 
-    div.appendChild(filter);
-    div.appendChild(dropdown);
+    sortArea.appendChild(sort);
+    sortArea.appendChild(dropdown);
 
-    // Portfolio
+    // Portfolio Media
     const portfolioGrid = document.createElement("div");
     portfolioGrid.className = "portfolio";
 
+    portfolioSection.appendChild(sortArea);
+    portfolioSection.appendChild(portfolioGrid);
+
+    // Portfolio Builder
     const firstname = name.split(" ")[0];
-    media.forEach((m) => {
-      const article = document.createElement("article");
+    function displayPortfolioMedia(medium) {
+      // Build each media article
+      medium.forEach((m) => {
+        const article = document.createElement("article");
 
-      const figure = document.createElement("figure");
-      figure.role = "group";
+        const figure = document.createElement("figure");
+        figure.role = "group";
 
-      // Image or Video
-      if (m.image !== undefined) {
-        const photographerWorkImage = document.createElement("img");
-        photographerWorkImage.setAttribute(
-          "src",
-          `assets/photographers/${firstname}/${m.image}`
-        );
-        photographerWorkImage.setAttribute("alt", m.title);
-        photographerWorkImage.className = "work";
+        // Image or Video
+        if (m.image !== undefined) {
+          const photographerWorkImage = document.createElement("img");
+          photographerWorkImage.setAttribute(
+            "src",
+            `assets/photographers/${firstname}/${m.image}`
+          );
+          photographerWorkImage.setAttribute("alt", m.title);
+          photographerWorkImage.className = "work";
 
-        figure.appendChild(photographerWorkImage);
+          figure.appendChild(photographerWorkImage);
+        } else {
+          const photographerWorkVideo = document.createElement("video");
+          photographerWorkVideo.setAttribute(
+            "src",
+            `assets/photographers/${firstname}/${m.video}`
+          );
+          photographerWorkVideo.setAttribute("alt", m.title);
+          photographerWorkVideo.className = "work";
+
+          figure.appendChild(photographerWorkVideo);
+        }
+
+        const photographerWorkTitle = document.createElement("figcaption");
+        photographerWorkTitle.textContent = m.title;
+        photographerWorkTitle.className = "work-caption primary-font";
+
+        // 'Like' Button
+        const likesButton = document.createElement("button");
+        likesButton.ariaLabel = "Nombres de likes";
+        likesButton.className = "like-button primary-font";
+
+        const icon = document.createElement("img");
+        icon.setAttribute("src", "assets/icons/heart.svg");
+        icon.alt = "Likes";
+        icon.className = "heart";
+
+        const span = document.createElement("span");
+        span.textContent = m.likes;
+
+        likesButton.appendChild(span);
+        likesButton.appendChild(icon);
+
+        // Toggle the like state (increment or decrease)
+        likesButton.addEventListener("click", () => {
+          if (Number(span.textContent) === m.likes) {
+            span.textContent = m.likes + 1;
+            updateTotalLikes(true);
+          } else {
+            span.textContent = m.likes;
+            updateTotalLikes(false);
+          }
+        });
+
+        article.appendChild(figure);
+        figure.appendChild(photographerWorkTitle);
+        photographerWorkTitle.appendChild(likesButton);
+
+        portfolioGrid.appendChild(article);
+      });
+    }
+
+    // Sort media
+    function sortPortfolio(value) {
+      if (value === "Titre") {
+        media.sort((a, b) => a.title.localeCompare(b.title));
+      } else if (value === "Date") {
+        media.sort((a, b) => new Date(b.date) - new Date(a.date));
       } else {
-        const photographerWorkVideo = document.createElement("video");
-        photographerWorkVideo.setAttribute(
-          "src",
-          `assets/photographers/${firstname}/${m.video}`
-        );
-        photographerWorkVideo.setAttribute("alt", m.title);
-        photographerWorkVideo.className = "work";
-
-        figure.appendChild(photographerWorkVideo);
+        media.sort((a, b) => b.likes - a.likes);
       }
 
-      const photographerWorkTitle = document.createElement("figcaption");
-      photographerWorkTitle.textContent = m.title;
-      photographerWorkTitle.className = "work-caption primary-font";
+      while (portfolioGrid.firstChild) {
+        portfolioGrid.removeChild(portfolioGrid.firstChild);
+      }
 
-      // 'Like' Button
-      const likesButton = document.createElement("button");
-      likesButton.ariaLabel = "Nombres de likes";
-      likesButton.className = "like-button primary-font";
+      // Add sorted articles back to the portfolio
+      displayPortfolioMedia(media);
+    }
+    sortPortfolio();
 
-      const icon = document.createElement("img");
-      icon.setAttribute("src", "assets/icons/heart.svg");
-      icon.alt = "Likes";
-      icon.className = "heart";
-
-      const span = document.createElement("span");
-      span.textContent = m.likes;
-
-      likesButton.appendChild(span);
-      likesButton.appendChild(icon);
-
-      likesButton.addEventListener("click", () => {
-        // Toggle the like state (increment or decrease)
-        if (Number(span.textContent) === m.likes) {
-          span.textContent = m.likes + 1;
-          updateTotalLikes(true);
-        } else {
-          span.textContent = m.likes;
-          updateTotalLikes(false);
-        }
-      });
-
-      article.appendChild(figure);
-      figure.appendChild(photographerWorkTitle);
-      photographerWorkTitle.appendChild(likesButton);
-
-      portfolioGrid.appendChild(article);
+    // Modify the dropdown event listener to call the sortPortfolio function
+    dropdown.addEventListener("change", (event) => {
+      const selectedValue = event.target.value;
+      sortPortfolio(selectedValue);
     });
-
-    // Appendices
-    portfolioSection.appendChild(div);
-    portfolioSection.appendChild(portfolioGrid);
 
     return portfolioSection;
   }
