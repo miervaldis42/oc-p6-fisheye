@@ -23,23 +23,53 @@
 
     <main id="main"></main>
 
-    <div id="contact_modal">
-      <div class="modal">
+    <dialog
+      id="contact-modal"
+      aria-label="Modale permettant au visiteur de contacter le/la photographe."
+      tabindex="-1"
+    >
+      <div id="contact-modal-content">
         <header>
           <h2>Contactez-moi</h2>
-          <img src="assets/icons/close.svg" onclick="closeModal()" />
+          <img
+            src="assets/icons/close.svg"
+            alt="Bouton pour fermer la modale"
+            class="close"
+            tabindex="0"
+          />
         </header>
 
-        <form>
-          <div>
-            <label>Prénom</label>
-            <input />
-          </div>
+        <form id="contact-form">
+          <!-- Firstname -->
+          <label for="firstname-input">Prénom </label>
+          <input type="text" id="firstname-input" autocomplete="firstname" />
 
-          <button class="contact_button">Envoyer</button>
+          <!-- Lastname -->
+          <label for="lastname-input">Nom</label>
+          <input type="text" id="lastname-input" autocomplete="lastname" />
+
+          <!-- Email -->
+          <label for="email-input">Email</label>
+          <input type="email" id="email-input" autocomplete="email" />
+
+          <!-- Message -->
+          <label for="message-input">Votre message</label>
+          <textarea
+            id="message-input"
+            wrap
+            placeholder="N'hésitez à utiliser cet espace pour écrire le/la photographe si vous avez des questions..."
+          ></textarea>
+
+          <button
+            type="button"
+            id="contact-modal-submit"
+            class="button primary"
+          >
+            Envoyer
+          </button>
         </form>
       </div>
-    </div>
+    </dialog>
 
     <script type="module" src="/scripts/pages/photographer.js"></script>
     <script type="module" src="/scripts/utils/contactForm.js"></script>
