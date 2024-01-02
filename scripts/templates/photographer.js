@@ -1,3 +1,6 @@
+// Imports
+import manageModal from "./modal";
+
 function photographerPageTemplate(data) {
   // Data
   const { photographer, media } = data;
@@ -34,6 +37,37 @@ function photographerPageTemplate(data) {
     contactButton.textContent = "Contactez-moi";
     contactButton.className = "contact-button button";
     contactButton.onclick = "displayModal()";
+
+    // Modal
+    manageModal("#contact-modal", contactButton);
+
+    const titleContactModal = document.querySelector("dialog header h2");
+    titleContactModal.innerHTML += `<br> ${name}`;
+
+    const submitButton = document.querySelector("#contact-modal-submit");
+    submitButton.addEventListener("click", () => {
+      const firstname = document.querySelector("#firstname-input");
+      const lastname = document.querySelector("#firstname-input");
+      const email = document.querySelector("#email-input");
+      const message = document.querySelector("#message-input");
+
+      const dataEnteredByVisitor = {
+        firstname: firstname.value,
+        lastname: lastname.value,
+        email: email.value,
+        message: message.value,
+      };
+
+      // Data to submit
+      console.log(dataEnteredByVisitor);
+
+      // Close modal
+      const body = document.body;
+      body.style.overflow = "auto";
+
+      const dialog = document.querySelector("#contact-modal");
+      dialog.close();
+    });
 
     // Photo
     const picture = `assets/photographers/photos/${portrait}`;
