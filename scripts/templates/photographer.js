@@ -309,7 +309,7 @@ function photographerPageTemplate(data) {
   // Insert
   function photographerPriceAndTotalLikesTemplate() {
     const insert = document.createElement("div");
-    insert.className = "insert secondary-background";
+    insert.className = "insert tertiary-background";
 
     // Likes
     const portfolioTotalLikes = document.createElement("p");

@@ -1,3 +1,4 @@
+// Control the functionalities of a specified modal
 function manageModal(modal, element, closeButton) {
   const body = document.body;
 

@@ -39,6 +39,10 @@ a {
   color: #901c1c;
 }
 
-.secondary-background {
+.secondary-font {
+  color: #d3573c;
+}
+
+.tertiary-background {
   background-color: #db8876;
 }
