@@ -1,9 +1,8 @@
-function manageModal(modalSelector, button) {
+function manageModal(modal, element, closeButton) {
   const body = document.body;
 
   // Show functionality
-  const modal = document.querySelector(modalSelector);
-  button.addEventListener("click", () => {
+  element.addEventListener("click", () => {
     body.style.overflow = "hidden"; // Prevent scrolling
 
     modal.showModal();
@@ -16,11 +15,10 @@ function manageModal(modalSelector, button) {
     modal.close();
   }
 
-  const closeImg = document.querySelector(".close");
-  closeImg.addEventListener("click", function () {
+  closeButton.addEventListener("click", function () {
     closeModal();
   });
-  closeImg.addEventListener("keydown", function (e) {
+  closeButton.addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
       e.preventDefault();
       closeModal();
