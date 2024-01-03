@@ -39,7 +39,9 @@ function photographerPageTemplate(data) {
     contactButton.onclick = "displayModal()";
 
     // Modal
-    manageModal("#contact-modal", contactButton);
+    const contactModal = document.querySelector("#contact-modal");
+    const contactCloseButton = contactModal.querySelector(".close");
+    manageModal(contactModal, contactButton, contactCloseButton);
 
     const titleContactModal = document.querySelector("dialog header h2");
     titleContactModal.innerHTML += `<br> ${name}`;
@@ -129,8 +131,10 @@ function photographerPageTemplate(data) {
     const firstname = name.split(" ")[0];
     function displayPortfolioMedia(medium) {
       // Build each media article
-      medium.forEach((m) => {
+      medium.forEach((m, index) => {
         const article = document.createElement("article");
+        article.className = "media";
+        article.tabIndex = "0";
 
         const figure = document.createElement("figure");
         figure.role = "group";
@@ -161,10 +165,11 @@ function photographerPageTemplate(data) {
         const photographerWorkTitle = document.createElement("figcaption");
         photographerWorkTitle.textContent = m.title;
         photographerWorkTitle.className = "work-caption primary-font";
+        figure.appendChild(photographerWorkTitle);
 
         // 'Like' Button
         const likesButton = document.createElement("button");
-        likesButton.ariaLabel = "Nombres de likes";
+        likesButton.ariaLabel = "Nombre de likes";
         likesButton.className = "like-button primary-font";
 
         const icon = document.createElement("img");
@@ -189,11 +194,87 @@ function photographerPageTemplate(data) {
           }
         });
 
-        article.appendChild(figure);
-        figure.appendChild(photographerWorkTitle);
         photographerWorkTitle.appendChild(likesButton);
 
+        article.appendChild(figure);
         portfolioGrid.appendChild(article);
+
+        // Lightbox Builder
+        figure.addEventListener("click", () => {
+          // Modal
+          const lightboxModal = document.querySelector("#lightbox-modal");
+          const lightboxCloseButton = lightboxModal.querySelector(".close");
+          manageModal(lightboxModal, article, lightboxCloseButton);
+
+          // Navigation Controls
+          const previousButton = document.createElement("img");
+          previousButton.src = "assets/icons/caret-left.svg";
+          previousButton.ariaLabel = "Revenir au média précèdent";
+          previousButton.tabIndex = "0";
+          previousButton.className = "lightbox-nav-button";
+          previousButton.addEventListener("click", () => {
+            lightboxMediaBuilder(medium[--index]);
+          });
+
+          const nextButton = document.createElement("img");
+          nextButton.src = "assets/icons/caret-right.svg";
+          nextButton.ariaLabel = "Aller au média suivant";
+          nextButton.tabIndex = "0";
+          nextButton.className = "lightbox-nav-button";
+          nextButton.addEventListener("click", () => {
+            lightboxMediaBuilder(medium[++index]);
+          });
+
+          // Media Lightbox
+          function lightboxMediaBuilder(selectedMedia) {
+            const lightbox = document.querySelector("#lightbox-modal-content");
+            lightbox.innerHTML = "";
+            const lightboxMedia = document.createElement("figure");
+            lightboxMedia.role = "group";
+
+            // Image or Video
+            if (m.image !== undefined) {
+              const imageToDisplay = document.createElement("img");
+              imageToDisplay.setAttribute(
+                "src",
+                `assets/photographers/${firstname}/${selectedMedia.image}`
+              );
+              imageToDisplay.setAttribute("alt", selectedMedia.title);
+              imageToDisplay.className = "work";
+
+              lightboxMedia.appendChild(imageToDisplay);
+            } else {
+              const videoToDisplay = document.createElement("video");
+              videoToDisplay.setAttribute(
+                "src",
+                `assets/photographers/${firstname}/${selectedMedia.video}`
+              );
+              videoToDisplay.setAttribute("alt", selectedMedia.title);
+              videoToDisplay.className = "work";
+
+              lightboxMedia.appendChild(videoToDisplay);
+            }
+
+            const mediaCaption = document.createElement("figcaption");
+            mediaCaption.textContent = selectedMedia.title;
+            mediaCaption.className = "work-caption primary-font";
+            lightboxMedia.appendChild(mediaCaption);
+
+            if (medium.indexOf(selectedMedia) === 0) {
+              lightbox.appendChild(lightboxMedia);
+              lightbox.appendChild(nextButton);
+            } else if (medium.indexOf(m) === medium.length - 1) {
+              lightbox.appendChild(previousButton);
+              lightbox.appendChild(lightboxMedia);
+            } else {
+              lightbox.appendChild(previousButton);
+              lightbox.appendChild(lightboxMedia);
+              lightbox.appendChild(nextButton);
+            }
+          }
+
+          lightboxMediaBuilder(m);
+        });
       });
     }
 
