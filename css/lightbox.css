@@ -1,0 +1,35 @@
+#lightbox-modal {
+  position: relative;
+
+  height: max-content;
+  width: 50%;
+
+  border: none;
+  border-radius: 5px;
+}
+
+#lightbox-modal::backdrop {
+  background-color: hsla(0, 0%, 0%, 0.6);
+}
+
+#lightbox-modal .close img svg {
+  fill: #901c1c;
+}
+
+#lightbox-modal-content {
+  display: flex;
+  align-items: center;
+}
+
+#lightbox-modal-content figure {
+  margin-top: 8%;
+}
+
+#lightbox-modal-content figure img,
+#lightbox-modal-content figure video {
+  width: 100%;
+}
+
+#lightbox-modal-content .lightbox-nav-button {
+  height: fit-content;
+}

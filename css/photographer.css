@@ -71,13 +71,15 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.portfolio article .work {
+.portfolio .media .work {
   height: 300px;
   width: 350px;
 
   object-fit: cover;
 
   border-radius: 5px;
+
+  cursor: pointer;
 }
 
 .portfolio .work-caption {
