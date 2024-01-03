@@ -9,8 +9,9 @@ function photographerTemplate(data) {
     clickableCard.href = `/photographer?id=${id}`;
     clickableCard.ariaLabel = `To ${name}'s page`;
 
-    const article = document.createElement("article");
-    article.setAttribute("aria-label", name);
+    const photographerArticle = document.createElement("article");
+    photographerArticle.setAttribute("aria-label", name);
+    photographerArticle.className = "photographer-article";
 
     // Photo
     const img = document.createElement("img");
@@ -20,10 +21,11 @@ function photographerTemplate(data) {
     // Name
     const h2 = document.createElement("h2");
     h2.textContent = name;
+    h2.className = "photographerName secondary-font";
 
     // City & Country
     const location = document.createElement("p");
-    location.className = "location";
+    location.className = "location primary-font";
     location.textContent = `${city}, ${country}`;
 
     // Tagline
@@ -35,12 +37,15 @@ function photographerTemplate(data) {
     dayPrice.className = "price";
     dayPrice.textContent = `${price}€/jour`;
 
-    clickableCard.appendChild(article);
-    article.appendChild(img);
-    article.appendChild(h2);
-    article.appendChild(location);
-    article.appendChild(slogan);
-    article.appendChild(dayPrice);
+    // Article Builder
+    photographerArticle.appendChild(img);
+    photographerArticle.appendChild(h2);
+    photographerArticle.appendChild(location);
+    photographerArticle.appendChild(slogan);
+    photographerArticle.appendChild(dayPrice);
+
+    // Make the photographe <article> clickable
+    clickableCard.appendChild(photographerArticle);
 
     return clickableCard;
   }
