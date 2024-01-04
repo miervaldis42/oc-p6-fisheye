@@ -99,9 +99,12 @@
   cursor: pointer;
 }
 
-.heart {
+.portfolio .like-button .heart {
   height: 18px;
   width: 18px;
+
+  filter: invert(20%) sepia(100%) saturate(1576%) hue-rotate(-20deg)
+    brightness(80%) contrast(70%);
 
   margin-left: 4px;
 }
