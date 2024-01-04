@@ -17,7 +17,7 @@
   <body>
     <header tabindex="0">
       <a href="/" aria-label="To Fisheye Home Page">
-        <img src="assets/images/logo.png" class="logo" alt="fisheye logo" />
+        <img src="assets/images/logo.png" class="logo" alt="Fisheye logo" />
       </a>
     </header>
 
@@ -26,7 +26,7 @@
     <!-- 'Contact me' modal -->
     <dialog
       id="contact-modal"
-      aria-label="Modale permettant au visiteur de contacter le/la photographe."
+      aria-label="Contact the photographer with this modal."
       tabindex="-1"
     >
       <div id="contact-modal-content">
@@ -34,7 +34,7 @@
           <h2>Contactez-moi</h2>
           <img
             src="assets/icons/close.svg"
-            alt="Bouton pour fermer la modale"
+            alt="Close the modal"
             class="close"
             tabindex="0"
           />
@@ -42,7 +42,7 @@
 
         <form id="contact-form">
           <!-- Firstname -->
-          <label for="firstname-input">Prénom </label>
+          <label for="firstname-input">Prénom</label>
           <input type="text" id="firstname-input" autocomplete="firstname" />
 
           <!-- Lastname -->
@@ -58,13 +58,14 @@
           <textarea
             id="message-input"
             wrap
-            placeholder="N'hésitez à utiliser cet espace pour écrire le/la photographe si vous avez des questions..."
+            placeholder="Don't hesitate to use this space to ask any questions to the photographer..."
           ></textarea>
 
           <button
             type="button"
             id="contact-modal-submit"
             class="button primary"
+            aria-label="Submit button"
           >
             Envoyer
           </button>
@@ -75,12 +76,12 @@
     <!-- 'Lightbox' modal -->
     <dialog
       id="lightbox-modal"
-      aria-label="Modale permettant au visiteur de voir les photos & vidéos du portfolio de le/la photographe."
+      aria-label="Modal to see closer the photographer's media."
       tabindex="-1"
     >
       <img
         src="assets/icons/close.svg"
-        alt="Bouton pour fermer la modale"
+        alt="Close the modal"
         class="close"
         tabindex="0"
       />
