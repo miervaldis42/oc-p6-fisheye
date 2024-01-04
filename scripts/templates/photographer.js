@@ -12,7 +12,7 @@ function photographerPageTemplate(data) {
     const photographerHeader = document.createElement("section");
     photographerHeader.className = "photograph-header";
     photographerHeader.ariaLabel =
-      "Section contenant les informations du/de la photographe";
+      "Information about the photographer and a way to contact them.";
 
     const photographerInfo = document.createElement("div");
 
@@ -35,8 +35,8 @@ function photographerPageTemplate(data) {
     const contactButton = document.createElement("button");
     contactButton.type = "button";
     contactButton.textContent = "Contactez-moi";
+    contactButton.ariaLabel = "Contact me";
     contactButton.className = "contact-button button";
-    contactButton.onclick = "displayModal()";
 
     // Modal
     const contactModal = document.querySelector("#contact-modal");
@@ -92,12 +92,10 @@ function photographerPageTemplate(data) {
   // Portfolio
   function photographerPortfolioTemplate() {
     const portfolioSection = document.createElement("section");
+    portfolioSection.className = "portfolio-section";
 
     // Filter
-    const sortArea = document.createElement("sortArea");
-    sortArea.className = "portfolio-section";
-    sortArea.ariaLabel = "Filtrer par";
-
+    const sortArea = document.createElement("div");
     const sort = document.createElement("label");
     sort.textContent = "Trier par";
     sort.htmlFor = "dropdown";
@@ -106,6 +104,8 @@ function photographerPageTemplate(data) {
     const dropdown = document.createElement("select");
     dropdown.setAttribute("id", "dropdown");
     dropdown.setAttribute("name", "sort");
+    dropdown.ariaLabel =
+      "Sort photographer's portfolio by the following options (By default, it is sorted by popularity)";
     dropdown.className = "button";
 
     const options = ["Popularité", "Date", "Titre"];
@@ -113,6 +113,8 @@ function photographerPageTemplate(data) {
       const option = document.createElement("option");
       option.value = o;
       option.textContent = o;
+      option.ariaLabel =
+        o === "Popularité" ? "Popularity" : o === "Titre" ? "Title" : o;
 
       dropdown.appendChild(option);
     });
@@ -122,6 +124,7 @@ function photographerPageTemplate(data) {
 
     // Portfolio Media
     const portfolioGrid = document.createElement("div");
+    portfolioGrid.ariaLabel = `${name}'s portfolio`;
     portfolioGrid.className = "portfolio";
 
     portfolioSection.appendChild(sortArea);
@@ -132,15 +135,16 @@ function photographerPageTemplate(data) {
     function displayPortfolioMedia(medium) {
       // Build each media article
       medium.forEach((m, index) => {
-        const article = document.createElement("article");
-        article.className = "media";
-        article.tabIndex = "0";
+        const mediaArticle = document.createElement("article");
+        mediaArticle.ariaLabel = `${m.title} thumbnail`;
+        mediaArticle.className = "media";
+        mediaArticle.tabIndex = "0";
 
         const figure = document.createElement("figure");
         figure.role = "group";
 
         // Image or Video
-        if (m.image !== undefined) {
+        if (m.image) {
           const photographerWorkImage = document.createElement("img");
           photographerWorkImage.setAttribute(
             "src",
@@ -169,7 +173,7 @@ function photographerPageTemplate(data) {
 
         // 'Like' Button
         const likesButton = document.createElement("button");
-        likesButton.ariaLabel = "Nombre de likes";
+        likesButton.ariaLabel = `${m.title} -  Likes counter`;
         likesButton.className = "like-button primary-font";
 
         const icon = document.createElement("img");
@@ -184,7 +188,9 @@ function photographerPageTemplate(data) {
         likesButton.appendChild(icon);
 
         // Toggle the like state (increment or decrease)
-        likesButton.addEventListener("click", () => {
+        likesButton.addEventListener("click", (e) => {
+          e.stopPropagation();
+
           if (Number(span.textContent) === m.likes) {
             span.textContent = m.likes + 1;
             updateTotalLikes(true);
@@ -196,31 +202,39 @@ function photographerPageTemplate(data) {
 
         photographerWorkTitle.appendChild(likesButton);
 
-        article.appendChild(figure);
-        portfolioGrid.appendChild(article);
+        mediaArticle.appendChild(figure);
+        portfolioGrid.appendChild(mediaArticle);
 
         // Lightbox Builder
         figure.addEventListener("click", () => {
           // Modal
           const lightboxModal = document.querySelector("#lightbox-modal");
           const lightboxCloseButton = lightboxModal.querySelector(".close");
-          manageModal(lightboxModal, article, lightboxCloseButton);
+          manageModal(lightboxModal, mediaArticle, lightboxCloseButton);
 
           // Navigation Controls
           const previousButton = document.createElement("img");
           previousButton.src = "assets/icons/caret-left.svg";
-          previousButton.ariaLabel = "Revenir au média précèdent";
+          previousButton.ariaLabel = "Previous media";
           previousButton.tabIndex = "0";
           previousButton.className = "lightbox-nav-button";
+
+          previousButton.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") lightboxMediaBuilder(medium[--index]);
+          });
           previousButton.addEventListener("click", () => {
             lightboxMediaBuilder(medium[--index]);
           });
 
           const nextButton = document.createElement("img");
           nextButton.src = "assets/icons/caret-right.svg";
-          nextButton.ariaLabel = "Aller au média suivant";
+          nextButton.ariaLabel = "Next media";
           nextButton.tabIndex = "0";
           nextButton.className = "lightbox-nav-button";
+
+          nextButton.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") lightboxMediaBuilder(medium[++index]);
+          });
           nextButton.addEventListener("click", () => {
             lightboxMediaBuilder(medium[++index]);
           });
@@ -233,7 +247,7 @@ function photographerPageTemplate(data) {
             lightboxMedia.role = "group";
 
             // Image or Video
-            if (m.image !== undefined) {
+            if (selectedMedia.image !== undefined) {
               const imageToDisplay = document.createElement("img");
               imageToDisplay.setAttribute(
                 "src",
@@ -250,6 +264,7 @@ function photographerPageTemplate(data) {
                 `assets/photographers/${firstname}/${selectedMedia.video}`
               );
               videoToDisplay.setAttribute("alt", selectedMedia.title);
+              videoToDisplay.setAttribute("controls", "");
               videoToDisplay.className = "work";
 
               lightboxMedia.appendChild(videoToDisplay);
@@ -263,7 +278,7 @@ function photographerPageTemplate(data) {
             if (medium.indexOf(selectedMedia) === 0) {
               lightbox.appendChild(lightboxMedia);
               lightbox.appendChild(nextButton);
-            } else if (medium.indexOf(m) === medium.length - 1) {
+            } else if (medium.indexOf(selectedMedia) === medium.length - 1) {
               lightbox.appendChild(previousButton);
               lightbox.appendChild(lightboxMedia);
             } else {
@@ -292,7 +307,7 @@ function photographerPageTemplate(data) {
         portfolioGrid.removeChild(portfolioGrid.firstChild);
       }
 
-      // Add sorted articles back to the portfolio
+      // Add sorted mediaArticles back to the portfolio
       displayPortfolioMedia(media);
     }
     sortPortfolio();
