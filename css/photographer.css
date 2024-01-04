@@ -11,6 +11,7 @@
   background-color: #fafafa;
 
   padding: 50px;
+  margin-bottom: 16px;
 }
 
 .photograph-header .photograph-name {
@@ -59,6 +60,7 @@
 }
 
 .portfolio-section {
+  padding-bottom: 80px;
   margin: 9px 0;
 }
 
