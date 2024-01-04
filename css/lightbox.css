@@ -1,35 +1,54 @@
 #lightbox-modal {
   position: relative;
 
-  height: max-content;
+  max-height: 90%;
   width: 50%;
 
   border: none;
   border-radius: 5px;
+
+  overflow-y: hidden;
 }
 
 #lightbox-modal::backdrop {
   background-color: hsla(0, 0%, 0%, 0.6);
 }
 
-#lightbox-modal .close img svg {
-  fill: #901c1c;
+#lightbox-modal .close {
+  filter: invert(20%) sepia(100%) saturate(1576%) hue-rotate(-20deg)
+    brightness(80%) contrast(70%);
 }
 
 #lightbox-modal-content {
+  width: -webkit-fill-available;
+  width: -moz-available;
+
   display: flex;
+  justify-content: center;
   align-items: center;
 }
 
 #lightbox-modal-content figure {
-  margin-top: 8%;
+  height: 80vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #lightbox-modal-content figure img,
 #lightbox-modal-content figure video {
-  width: 100%;
+  max-height: -webkit-fill-available;
+  max-height: -moz-available;
+  max-width: 100%;
+
+  box-shadow: 6px 0px 5px 0px rgba(0, 0, 0, 0.45);
+  -webkit-box-shadow: 6px 0px 5px 0px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: 6px 0px 5px 0px rgba(0, 0, 0, 0.45);
 }
 
 #lightbox-modal-content .lightbox-nav-button {
   height: fit-content;
+
+  cursor: pointer;
 }
