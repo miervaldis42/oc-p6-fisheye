@@ -136,6 +136,9 @@ function photographerPageTemplate(data) {
     function displayPortfolioMedia(medium) {
       // Build each media article
       medium.forEach((m, index) => {
+        const mediaLink = document.createElement("a");
+        mediaLink.href = "javascript:void(0);";
+
         const mediaArticle = document.createElement("article");
         mediaArticle.ariaLabel = `${m.title} thumbnail`;
         mediaArticle.className = "media";
@@ -203,15 +206,16 @@ function photographerPageTemplate(data) {
         photographerWorkTitle.appendChild(likesButton);
 
         mediaArticle.appendChild(figure);
-        portfolioGrid.appendChild(mediaArticle);
+        mediaLink.appendChild(mediaArticle);
+        portfolioGrid.appendChild(mediaLink);
+
+        // Modal
+        const lightboxModal = document.querySelector("#lightbox-modal");
+        const lightboxCloseButton = lightboxModal.querySelector(".close");
+        manageModal(lightboxModal, mediaLink, lightboxCloseButton);
 
         // Lightbox Builder
-        mediaArticle.addEventListener("click", () => {
-          // Modal
-          const lightboxModal = document.querySelector("#lightbox-modal");
-          const lightboxCloseButton = lightboxModal.querySelector(".close");
-          manageModal(lightboxModal, mediaArticle, lightboxCloseButton);
-
+        mediaLink.addEventListener("click", () => {
           // Navigation Controls
           const previousButton = document.createElement("img");
           previousButton.src = "assets/icons/caret-left.svg";
