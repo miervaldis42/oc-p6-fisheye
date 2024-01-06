@@ -89,9 +89,10 @@ function photographerPageTemplate(data) {
     return photographerHeader;
   }
 
-  // Portfolio
+  // Portfolio Section
   function photographerPortfolioTemplate() {
     const portfolioSection = document.createElement("section");
+    portfolioSection.ariaLabel = `${name}'s portfolio`;
     portfolioSection.className = "portfolio-section";
 
     // Filter
@@ -138,7 +139,6 @@ function photographerPageTemplate(data) {
         const mediaArticle = document.createElement("article");
         mediaArticle.ariaLabel = `${m.title} thumbnail`;
         mediaArticle.className = "media";
-        mediaArticle.tabIndex = "0";
 
         const figure = document.createElement("figure");
         figure.role = "group";
@@ -160,7 +160,7 @@ function photographerPageTemplate(data) {
             "src",
             `assets/photographers/${firstname}/${m.video}`
           );
-          photographerWorkVideo.setAttribute("alt", m.title);
+          photographerWorkVideo.setAttribute("aria-label", m.title);
           photographerWorkVideo.className = "work";
 
           figure.appendChild(photographerWorkVideo);
@@ -206,7 +206,7 @@ function photographerPageTemplate(data) {
         portfolioGrid.appendChild(mediaArticle);
 
         // Lightbox Builder
-        figure.addEventListener("click", () => {
+        mediaArticle.addEventListener("click", () => {
           // Modal
           const lightboxModal = document.querySelector("#lightbox-modal");
           const lightboxCloseButton = lightboxModal.querySelector(".close");
@@ -263,7 +263,7 @@ function photographerPageTemplate(data) {
                 "src",
                 `assets/photographers/${firstname}/${selectedMedia.video}`
               );
-              videoToDisplay.setAttribute("alt", selectedMedia.title);
+              videoToDisplay.setAttribute("aria-label", selectedMedia.title);
               videoToDisplay.setAttribute("controls", "");
               videoToDisplay.className = "work";
 
@@ -324,12 +324,15 @@ function photographerPageTemplate(data) {
   // Insert
   function photographerPriceAndTotalLikesTemplate() {
     const insert = document.createElement("div");
+    insert.ariaLabel =
+      "Photographer Additional Info : Number of likes in total and Price per day";
     insert.className = "insert tertiary-background";
 
     // Likes
     const portfolioTotalLikes = document.createElement("p");
     portfolioTotalLikes.id = "portfolioTotalLikes";
     portfolioTotalLikes.innerHTML = initialTotalLikes;
+    portfolioTotalLikes.ariaLabel = `The total number of likes got by ${name}`;
 
     const heart = document.createElement("img");
     heart.setAttribute("src", "assets/icons/heart.svg");
@@ -342,6 +345,7 @@ function photographerPageTemplate(data) {
     // Price
     const priceText = document.createElement("p");
     priceText.textContent = `${price}€/jour`;
+    priceText.ariaLabel = `Price per day to hire ${name}`;
 
     insert.appendChild(priceText);
 
