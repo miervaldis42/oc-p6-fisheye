@@ -7,6 +7,11 @@ function manageModal(modal, element, closeButton) {
     body.style.overflow = "hidden"; // Prevent scrolling
 
     modal.showModal();
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Use 'auto' for instant scrolling
+    });
   });
 
   // Close functionality
