@@ -39,7 +39,8 @@ To start the website, do the following :
 
 1. Open a terminal
 2. Place yourself in the project folder
-3. Use either `npm run dev`, `npm run preview` or `npm run build` to see Fisheye website
+3. Run `npm i` to install the project dependencies
+4. Then, run `npm run dev` to start Fisheye website
 
 **_🎉 Vite will open the project in a browser tab !_**
 
