@@ -138,10 +138,10 @@ function photographerPageTemplate(data) {
       medium.forEach((m, index) => {
         const mediaLink = document.createElement("a");
         mediaLink.href = "javascript:void(0);";
+        mediaLink.className = "media";
 
         const mediaArticle = document.createElement("article");
         mediaArticle.ariaLabel = `${m.title} thumbnail`;
-        mediaArticle.className = "media";
 
         const figure = document.createElement("figure");
         figure.role = "group";
@@ -224,7 +224,9 @@ function photographerPageTemplate(data) {
           previousButton.className = "lightbox-nav-button";
 
           previousButton.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") lightboxMediaBuilder(medium[--index]);
+            if (e.key === "Enter" || e.key === "13") {
+              lightboxMediaBuilder(medium[--index]);
+            }
           });
           previousButton.addEventListener("click", () => {
             lightboxMediaBuilder(medium[--index]);
@@ -237,10 +239,29 @@ function photographerPageTemplate(data) {
           nextButton.className = "lightbox-nav-button";
 
           nextButton.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") lightboxMediaBuilder(medium[++index]);
+            if (e.key === "Enter" || e.key === "13") {
+              lightboxMediaBuilder(medium[++index]);
+            }
           });
           nextButton.addEventListener("click", () => {
             lightboxMediaBuilder(medium[++index]);
+          });
+
+          lightboxModal.addEventListener("keydown", (e) => {
+            // Prevent arrow keys when reaching the limits of the `medium` array
+            if (index === 0 && e.key === "ArrowLeft") {
+              return;
+            }
+            if (index === medium.length - 1 && e.key === "ArrowRight") {
+              return;
+            }
+
+            // Handle arrow left and arrow right key presses
+            if (e.key === "ArrowLeft") {
+              lightboxMediaBuilder(medium[--index]);
+            } else if (e.key === "ArrowRight") {
+              lightboxMediaBuilder(medium[++index]);
+            }
           });
 
           // Media Lightbox

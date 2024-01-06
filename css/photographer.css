@@ -71,6 +71,12 @@
 .portfolio {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+}
+
+.portfolio .media {
+  height: min-content;
+  width: min-content;
 }
 
 .portfolio .media .work {
